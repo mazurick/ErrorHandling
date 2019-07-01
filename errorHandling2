@@ -1,0 +1,41 @@
+/*
+
+Error Handling
+ Adam Mazurick
+*/
+
+
+enum ParserError: Error {
+    case emptyDictionary
+    case invalidKey
+}
+
+struct Parser {
+    var data: [String : String?]?
+    
+    func parse() throws {
+        
+        guard (data?["user record"]) != nil  else {
+            throw ParserError.invalidKey
+        }
+        
+        guard (data?.keys) != nil else {
+            throw ParserError.emptyDictionary 
+        }
+    }
+}
+
+//let data: [String : String?]? = ["user record": nil]
+
+let data: [String : String?]? = nil
+
+let parser = Parser(data: data)
+
+do {
+    try parser.parse()
+} catch ParserError.emptyDictionary {
+    print("Yo empty dictionary")
+} catch ParserError.invalidKey {
+    print("The key 'someKey' does not exist.")
+}
+
